@@ -1,0 +1,6 @@
+/venv/
+/constants.py
+/uploads/
+/some_data/
+/.idea/
+/__pycache__/
