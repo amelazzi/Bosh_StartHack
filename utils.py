@@ -1,6 +1,6 @@
 import json
 import urllib
-import requests
+from flask import request
 from constants import simulator_ip
 
 def get_avalible_signal_names(ip):
