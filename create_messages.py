@@ -5,15 +5,17 @@ from constants import simulator_ip
 from utils import get_avalible_signal_names, get_signal_data
 
 
-lat = get_signal_data(simulator_ip, 'NP_LatDegree')
-lon = get_signal_data(simulator_ip, 'NP_LongDegree')
 
 
-def weather_message(w, file_name):
+
+def weather_message():
+    lat = get_signal_data(simulator_ip, 'NP_LatDegree')
+    lon = get_signal_data(simulator_ip, 'NP_LongDegree')
+    w = requests.get(
+    'http://api.openweathermap.org/data/2.5/weather?lat=' + str(lat['value']) + '&lon=' + str(lon['value']) + '&APPID=a7c0bfead821b64b6866e867d07a02eb').json()
     s = "This is a "
     s += w['weather'][0]['description']
     s += " today. " + '\n'
-    s += w['weather'][0]['main'] + '\n'
     if (w['weather'][0]['main'] == 'Rain'):
         s += "First of all, turn on your low-beam headlights. " + '\n'
         s += "Be careful. Heavy rainfall can reduce visibility to zero. Pull over and wait for the rain to subside, or until visibility is restored."
@@ -26,13 +28,3 @@ def weather_message(w, file_name):
         s += "Shift to low gear before going down a steep hill, but do not downshift at too fast a speed." + '\n'
 
     return s
-
-
-
-
-import requests
-import string
-r = requests.get(
-    'http://api.openweathermap.org/data/2.5/weather?lat=' + str(lat['value']) + '&lon=' + str(lon['value']) + '&APPID=a7c0bfead821b64b6866e867d07a02eb')
-w = r.json()
-print(weather_message(w, 'advices.txt'))
