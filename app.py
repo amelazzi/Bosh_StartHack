@@ -1,10 +1,13 @@
 import httpauth as httpauth
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
+from werkzeug.utils import secure_filename
+
 from constants import my_ip
 from flask import make_response
 from flask_httpauth import HTTPBasicAuth
 from create_messages import weather_message
+import os
 
 auth = HTTPBasicAuth()
 
@@ -38,8 +41,24 @@ class Messages(Resource):
         if ('weather' not in last_message or last_message['weather'] != weather):
             answer['weather'] = weather
             last_message['weather'] = weather
-
         return answer
+
+
+PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
+UPLOAD_FOLDER = '{}/uploads/'.format(PROJECT_HOME)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+def create_new_folder(local_dir):
+    newpath = local_dir
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+    return newpath
+
+
+class Driver_mood(Resource):
+    def post(self):
+        img = request.files['image']
+        img_name = secure_filename(img.filename)
+
 
 
 api.add_resource(Messages, '/messages')

@@ -12,5 +12,5 @@ def get_signal_data(ip, signal_name):
     return d['measurement']
 
 
-print(get_avalible_signal_names(simulator_ip))
-print(get_signal_data(simulator_ip, 'AB_Gurtschloss_BF'))
+# print(get_avalible_signal_names(simulator_ip))
+# print(get_signal_data(simulator_ip, 'AB_Gurtschloss_BF'))
