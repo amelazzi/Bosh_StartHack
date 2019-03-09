@@ -4,6 +4,8 @@ from flask_restful import Resource, Api
 from constants import my_ip
 from flask import make_response
 from flask_httpauth import HTTPBasicAuth
+from create_messages import weather_message
+
 auth = HTTPBasicAuth()
 
 app = Flask(__name__)
@@ -32,8 +34,12 @@ def not_found(error):
 class Messages(Resource):
     def get(self):
         answer = {}
+        weather = weather_message()
+        if ('weather' not in last_message or last_message['weather'] != weather):
+            answer['weather'] = weather
+            last_message['weather'] = weather
 
-        return {'hello':'friend'}
+        return answer
 
 
 api.add_resource(Messages, '/messages')
