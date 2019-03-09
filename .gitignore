@@ -1,5 +1,5 @@
-/venv/*
 /venv/
 /constants.py
 /uploads/
 /some_data/
+/.idea/
