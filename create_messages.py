@@ -26,5 +26,4 @@ def weather_message():
         s += "Avoid fast turns." + '\n'
         s += "Avoid quick stops." + '\n'
         s += "Shift to low gear before going down a steep hill, but do not downshift at too fast a speed." + '\n'
-
     return s
