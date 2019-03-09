@@ -13,6 +13,7 @@ def weather_message(w, file_name):
     s = "This is a "
     s += w['weather'][0]['description']
     s += " today. " + '\n'
+    s += w['weather'][0]['main'] + '\n'
     if (w['weather'][0]['main'] == 'Rain'):
         s += "First of all, turn on your low-beam headlights. " + '\n'
         s += "Be careful. Heavy rainfall can reduce visibility to zero. Pull over and wait for the rain to subside, or until visibility is restored."
@@ -34,5 +35,4 @@ import string
 r = requests.get(
     'http://api.openweathermap.org/data/2.5/weather?lat=' + str(lat['value']) + '&lon=' + str(lon['value']) + '&APPID=a7c0bfead821b64b6866e867d07a02eb')
 w = r.json()
-
 print(weather_message(w, 'advices.txt'))

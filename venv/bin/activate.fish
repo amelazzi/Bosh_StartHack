@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/zedroman/PycharmProjects/untitled/venv"
+set -gx VIRTUAL_ENV "/Users/diana/Documents/хакатон/Bosch_StartHack/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
