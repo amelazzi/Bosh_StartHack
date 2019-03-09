@@ -1,3 +1,5 @@
 /venv/*
-uploads
-some_data
+/venv/
+/constants.py
+/uploads/
+/some_data/
