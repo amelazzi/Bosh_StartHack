@@ -1,6 +1,6 @@
 import httpauth as httpauth
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
+from flask import Flask, request, jsonify, send_from_directory
+from flask_restful import Api, Resource
 from werkzeug.utils import secure_filename
 
 from constants import my_ip
@@ -55,13 +55,22 @@ def create_new_folder(local_dir):
 
 
 class Driver_mood(Resource):
+    def get(self):
+        return {"kek" : "lol"}
     def post(self):
         img = request.files['image']
         img_name = secure_filename(img.filename)
+        create_new_folder(app.config['UPLOAD_FOLDER'])
+        saved_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
+        app.logger.info("saving {}".format(saved_path))
+        img.save(saved_path)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], img_name, as_attachment=True)
 
 
 
 api.add_resource(Messages, '/messages')
+api.add_resource(Driver_mood, '/driver_mood')
 
 if __name__ == '__main__':
+
     app.run(host = my_ip, port='5002')
