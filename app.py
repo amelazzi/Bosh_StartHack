@@ -1,24 +1,24 @@
 import httpauth as httpauth
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_restful import Api, Resource
 from werkzeug.utils import secure_filename
 import json
 from constants import my_ip,json_mis_path
 from flask import make_response
 from flask_httpauth import HTTPBasicAuth
-from create_messages import weather_message
+from create_messages import weather_message, check_gas
 import os
 
 auth = HTTPBasicAuth()
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 api = Api(app)
 
 last_message = {}
-
-@app.route('/')
-def index():
-    return "Hello, World!"
+#
+# @app.route('/<string:page_name>/')
+# def render_static(page_name):
+#     return render_template('%s.html' % page_name)
 
 @auth.get_password
 def get_password(username):
@@ -37,10 +37,14 @@ def not_found(error):
 class Messages(Resource):
     def get(self):
         answer = {}
-        weather = weather_message()
-        if ('weather' not in last_message or last_message['weather'] != weather):
-            answer['weather'] = weather
-            last_message['weather'] = weather
+        # weather = weather_message()
+        # if ('weather' not in last_message or last_message['weather'] != weather):
+        #     answer['weather'] = weather
+        #     last_message['weather'] = weather
+        # gas = check_gas()
+        # if ('gas' not in last_message or last_message['gas'] != gas):
+        #     answer['gas'] = gas
+        #     last_message['gas'] = gas
         return answer
 
 class Mistakes(Resource):

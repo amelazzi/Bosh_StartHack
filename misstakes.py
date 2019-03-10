@@ -9,6 +9,7 @@ with open(json_mis_path, 'w') as json_file:
 check_time = {
     "belt": 5,
     "lights": 5,
+    "speed" : 5,
 }
 
 if __name__ == '__main__':
@@ -32,9 +33,12 @@ if __name__ == '__main__':
                 mistakes.append(m)
 
 
-        m = check_speed()
-        if (m):
-            mistakes.append(m)
+
+        if (check_time['speed'] == 0):
+            check_time['speed'] = 5
+            m = check_speed()
+            if (m):
+                mistakes.append(m)
 
         plot_points()
 
