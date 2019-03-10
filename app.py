@@ -1,4 +1,4 @@
-import httpauth as httpauth
+# import httpauth as httpauth
 from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_restful import Api, Resource
 from werkzeug.utils import secure_filename
@@ -37,10 +37,10 @@ def not_found(error):
 class Messages(Resource):
     def get(self):
         answer = {}
-        # weather = weather_message()
-        # if ('weather' not in last_message or last_message['weather'] != weather):
-        #     answer['weather'] = weather
-        #     last_message['weather'] = weather
+        weather = weather_message()
+        if ('weather' not in last_message or last_message['weather'] != weather):
+            answer['weather'] = weather
+            last_message['weather'] = weather
         # gas = check_gas()
         # if ('gas' not in last_message or last_message['gas'] != gas):
         #     answer['gas'] = gas
