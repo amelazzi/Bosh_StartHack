@@ -54,7 +54,7 @@ def emotion_message(pwd):
 
 
 def check_gas():
-    gas_percent = get_signal_data(simulator_ip, 'KBI_Tankfuellstand_Prozent')
+    gas_percent = get_signal_data(simulator_ip, 'KBI_Tankfuellstand_Prozent')['value']
     if (gas_percent < 6):
         return "Caution! Critical gas level" + str(gas_percent) + "left"
     if (gas_percent < 20):
@@ -74,7 +74,8 @@ def check_blinkers():
     left_blinker = get_signal_data(simulator_ip, 'BH_Blinker_li')['value']
     right_blinker = get_signal_data(simulator_ip, 'BH_Blinker_re')['value']
     direction = get_signal_data(simulator_ip, 'LWI_VZ_Lenkradwinkel')['value']
-    if (angle > 20):
+    cur_speed = get_signal_data(simulator_ip, 'ESP_v_Signal')['value']
+    if (cur_speed > 1 and angle > 90):
         if (direction):
             if (not left_blinker and right_blinker):
                 return "You turned on the wrong blinker."
@@ -131,21 +132,23 @@ if (latitude and longtitude):
 def plot_points():
     if (len(latitude_list) > 0 and len(longitude_list) > 0):
         latitude, longtitude = get_coordinates()
-
+        if(len(latitude_list) > 100):
+            longitude_list.clear()
+            longitude_list.clear()
         latitude_list.append(latitude)
         longitude_list.append(longtitude)
         if (len(latitude_list) % 10 == 0):
             # print(latitude_list)
             # print(longitude_list)
 
-            # # scatter method of map object
-            # # scatter points on the google map
-            # gmap3.scatter(latitude_list, longitude_list, '# FF0000',
-            #               size=40, marker=False)
+            # scatter method of map object
+            # scatter points on the google map
+            gmap3.scatter(latitude_list, longitude_list, '# FF0000',
+                          size=5, marker=False)
 
             # Plot method Draw a line in
             # between given coordinates
-            gmap3.plot(latitude_list, longitude_list,
-                       'cornflowerblue', edge_width=10)
+            # gmap3.plot(latitude_list, longitude_list,
+            #            'cornflowerblue', edge_width=10)
 
-            gmap3.draw("map.html")
+            gmap3.draw("templates/map.html")
